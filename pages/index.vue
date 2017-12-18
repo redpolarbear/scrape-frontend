@@ -56,6 +56,12 @@
         </b-tabs>
       </b-card>
     </b-card>
+    <b-row align-h="between">
+      <b-col></b-col>
+      <b-col cols="auto">
+        <b-button variant="info">Next Step</b-button>
+      </b-col>
+    </b-row>
     <!-- <pre>
       {{ item }}
     </pre> -->
@@ -63,21 +69,28 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'home',
   data () {
     return {
-      url: '',
-      item: {}
+      url: ''
     }
+  },
+  computed: {
+    ...mapGetters({
+      item: 'GET_ITEM'
+    })
   },
   methods: {
     async onSubmit (event) {
       event.preventDefault()
-      this.$axios.setHeader('Content-Type', 'application/x-www-form-urlencoded', ['post'])
-      this.item = await this.$axios.$post('/scrape', {
-        url: this.url
-      })
+      this.$store.dispatch('SCRAPE_ITEM_BY_API', {url: this.url})
+      // this.$axios.setHeader('Content-Type', 'application/x-www-form-urlencoded', ['post'])
+      // this.item = await this.$axios.$post('/scrape', {
+      //   url: this.url
+      // })
     }
   }
 }
