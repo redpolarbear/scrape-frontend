@@ -22,6 +22,9 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    vendor: [
+      'vue-form-wizard'
+    ],
     /*
     ** Run ESLint on save
     */
@@ -54,6 +57,12 @@ module.exports = {
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/proxy'
+  ],
+  /*
+  ** Plugins configuration
+  */
+  plugins: [
+    '~/plugins/vueformwizard'
   ],
   proxy: [
     ['/api',
