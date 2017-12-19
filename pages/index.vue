@@ -59,7 +59,7 @@
     <b-row align-h="between">
       <b-col></b-col>
       <b-col cols="auto">
-        <b-button variant="info">Next Step</b-button>
+        <b-button variant="info" to="/wizard" >Next Step</b-button>
       </b-col>
     </b-row>
     <!-- <pre>
@@ -86,6 +86,7 @@ export default {
   methods: {
     async onSubmit (event) {
       event.preventDefault()
+      this.$store.commit('SET_ITEM', null)
       this.$store.dispatch('SCRAPE_ITEM_BY_API', {url: this.url})
       // this.$axios.setHeader('Content-Type', 'application/x-www-form-urlencoded', ['post'])
       // this.item = await this.$axios.$post('/scrape', {
