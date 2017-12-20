@@ -13,7 +13,7 @@
             </b-form-checkbox>
           </template>
           <b-form-checkbox-group id="imgs" stacked v-model="selected" name="imgs" class="ml-4">
-            <b-form-checkbox v-for="(img, index) in item.imgs" :key="index" :value="img.src">
+            <b-form-checkbox v-for="(img, index) in item.imgs" :key="index" :value="img">
               <b-row align-v="start" align-h="between">
                 <b-col>
                   <b-img :src="img.src" height="196"></b-img>
