@@ -30,9 +30,15 @@ const createStore = () => {
       SET_ERROR (state, payload) {
         state.error = payload
       },
-      SET_ITEM_IMG_STATUS (state, payload) {
-        const imageObj = state.item.imgs[payload.index]
-        state.item.imgs[payload.index] = Object.assign(imageObj, {status: imageObj.status ? imageObj.status : '' + payload.status})
+      SET_ITEM_IMG_INFO (state, payload) {
+        // state.item.imgs[payload.index] = { ...state.item.imgs[payload.index] }
+        state.item.imgs[payload.index][payload.key] = payload.value
+        // const status = state.item.imgs[payload.index]['status'] + '\n\r' + payload.status
+        // console.log(status)
+        // console.log(state.item.imgs[payload.index]['status'])
+        // state.item.imgs.slice(0, payload.index).concat([{ src: state.item.imgs[payload.index]['src'], status: status }]).concat(state.items.imgs.slice(payload.index + 1))
+        // // state.item.imgs = [ ...state.items.imgs.slice(0, payload.index), { src: state.item.imgs[payload.index]['src'], status: status }, ...state.items.imgs.slice(payload.index + 1) ]
+        // state.item = Object.assign({ ...state.item }, { imgs: {} })
       }
     },
     actions: {
@@ -53,16 +59,14 @@ const createStore = () => {
         }
       },
       async SAVE_IMAGES_TO_LOCAL ({commit}, payload) {
-        var status = 'Saving the image to the local...'
-        commit('SET_ITEM_IMG_STATUS', {index: payload.index, status: status})
+        // var status = 'Saving the image to the local...'
+        // commit('SET_ITEM_IMG_STATUS', {index: payload.index, status: status})
         const filename = await this.$axios.$get('/saveimage', {
           params: {
             imageUrl: payload.imageUrl
           }
         })
-        console.log(filename)
-        status = 'Successfully saved (' + filename + ')'
-        commit('SET_ITEM_IMG_STATUS', {index: payload.index, status: status})
+        commit('SET_ITEM_IMG_INFO', {index: payload.index, key: 'local', value: filename})
       }
     }
   })

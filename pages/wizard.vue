@@ -15,19 +15,17 @@
           <b-form-checkbox-group id="imgs" stacked v-model="selected" name="imgs" class="ml-4">
             <b-form-checkbox v-for="(img, index) in item.imgs" :key="index" :value="img">
               <b-row align-v="start" align-h="between">
-                <b-col>
-                  <b-img :src="img.src" height="196"></b-img>
+                <b-col cols="4" sm="auto">
+                  <b-img :src="img.src" style="max-width: 200px; max-height: 200px;"></b-img>
                 </b-col>
                 <b-col>
-                  <b-form-textarea id="imgStatus"
-                    :rows="7"
-                    :max-rows="9"
-                    readonly
-                    class="log-textarea"
-                    v-model="img.status">
-                  </b-form-textarea>
+                  <ul>
+                    <li>{{ img.src }}</li>
+                    <li>{{ img.local }}</li>
+                    <li>{{ img.wdsrc }}</li>
+                  </ul>
                 </b-col>
-                <b-col>
+                <b-col sm="auto">
                   <b-button @click.stop="onImageProcess(img, index)">
                     Process
                   </b-button>
@@ -61,7 +59,8 @@ export default {
     return {
       selected: [],
       allSelected: false,
-      indeterminate: false
+      indeterminate: false,
+      status: ''
     }
   },
   computed: {
@@ -78,7 +77,7 @@ export default {
         index,
         imageUrl: image.src
       }
-      this.$store.dispatch('SAVE_IMAGES_TO_LOCAL', payload)
+      await this.$store.dispatch('SAVE_IMAGES_TO_LOCAL', payload)
     }
   },
   watch: {
@@ -99,7 +98,7 @@ export default {
 </script>
 
 <style scoped>
-  .log-textarea {
+  .log-area {
     resize: none;
     width: 420px;
   }
