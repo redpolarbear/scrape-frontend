@@ -1,38 +1,38 @@
 <template>
   <b-container>
     <form-wizard>
-      <tab-content title="Personal details">
-        My first tab content
+      <tab-content title="Upload Images">
         <b-form-group>
           <template slot="label">
-            <b>Choose your flavours:</b><br>
-            <b-form-checkbox 
+            <b>Choose the images you'd like to upload:</b><br>
+            <b-form-checkbox
               v-model="allSelected"
               :indeterminate="indeterminate"
-              aria-describedby="imgs"
-              aria-controls="imgs"
               @change="toggleAll">
               {{ allSelected ? 'Un-select All' : 'Select All' }}
             </b-form-checkbox>
           </template>
-          <b-form-checkbox-group 
-            id="imgs"
-            stacked
-            v-model="selected"
-            name="imgs"
-            class="ml-4"
-            aria-label="Images" fluid>
-            <b-form-checkbox v-for="(img, index) in item.imgs" :key="index" :value="img">
-              <!-- {{ img }} -->
-              <div style="display: inline-flex; align-items: center; justify-content: space-around;">
-                <b-img :src="img" width="128"></b-img>
-                <b-form-textarea id="textarea1"
-                  placeholder="Enter something"
-                  :rows="3"
-                  :max-rows="6" readonly
-                  style="resize: none; width: 600px;">
-                </b-form-textarea>
-              </div>
+          <b-form-checkbox-group id="imgs" stacked v-model="selected" name="imgs" class="ml-4">
+            <b-form-checkbox v-for="(img, index) in item.imgs" :key="index" :value="img.src">
+              <b-row align-v="start" align-h="between">
+                <b-col>
+                  <b-img :src="img.src" height="196"></b-img>
+                </b-col>
+                <b-col>
+                  <b-form-textarea id="imgStatus"
+                    :rows="7"
+                    :max-rows="9"
+                    readonly
+                    class="log-textarea"
+                    v-model="img.status">
+                  </b-form-textarea>
+                </b-col>
+                <b-col>
+                  <b-button @click.stop="onImageProcess(img, index)">
+                    Process
+                  </b-button>
+                </b-col>
+              </b-row>
             </b-form-checkbox>
           </b-form-checkbox-group>
         </b-form-group>
@@ -59,7 +59,6 @@ export default {
   name: 'wizard',
   data () {
     return {
-      flavours: ['Orange', 'Grape', 'Apple', 'Lime', 'Very Berry'],
       selected: [],
       allSelected: false,
       indeterminate: false
@@ -73,15 +72,21 @@ export default {
   methods: {
     toggleAll (checked) {
       this.selected = checked ? this.item.imgs.slice() : []
+    },
+    async onImageProcess (image, index) {
+      const payload = {
+        index,
+        imageUrl: image.src
+      }
+      this.$store.dispatch('SAVE_IMAGES_TO_LOCAL', payload)
     }
   },
   watch: {
     selected (newVal, oldVal) {
-      // Handle changes in individual flavour checkboxes
       if (newVal.length === 0) {
         this.indeterminate = false
         this.allSelected = false
-      } else if (newVal.length === this.flavours.length) {
+      } else if (newVal.length === this.item.imgs.length) {
         this.indeterminate = false
         this.allSelected = true
       } else {
@@ -93,6 +98,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .log-textarea {
+    resize: none;
+    width: 420px;
+  }
 </style>

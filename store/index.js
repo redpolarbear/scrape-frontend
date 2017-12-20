@@ -4,7 +4,7 @@ const createStore = () => {
   return new Vuex.Store({
     state () {
       return {
-        item: {},
+        item: null,
         loading: false,
         error: null
       }
@@ -29,6 +29,10 @@ const createStore = () => {
       },
       SET_ERROR (state, payload) {
         state.error = payload
+      },
+      SET_ITEM_IMG_STATUS (state, payload) {
+        const imageObj = state.item.imgs[payload.index]
+        state.item.imgs[payload.index] = Object.assign(imageObj, {status: imageObj.status ? imageObj.status : '' + payload.status})
       }
     },
     actions: {
@@ -47,6 +51,18 @@ const createStore = () => {
           commit('SET_ERROR', errorMessage)
           console.log(errorMessage)
         }
+      },
+      async SAVE_IMAGES_TO_LOCAL ({commit}, payload) {
+        var status = 'Saving the image to the local...'
+        commit('SET_ITEM_IMG_STATUS', {index: payload.index, status: status})
+        const filename = await this.$axios.$get('/saveimage', {
+          params: {
+            imageUrl: payload.imageUrl
+          }
+        })
+        console.log(filename)
+        status = 'Successfully saved (' + filename + ')'
+        commit('SET_ITEM_IMG_STATUS', {index: payload.index, status: status})
       }
     }
   })
