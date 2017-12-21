@@ -5,13 +5,23 @@
         <b-form-group>
           <template slot="label">
             <b>Choose the images you'd like to upload:</b><br>
-            <b-form-checkbox
-              v-model="allSelected"
-              :indeterminate="indeterminate"
-              @change="toggleAll">
-              {{ allSelected ? 'Un-select All' : 'Select All' }}
-            </b-form-checkbox>
           </template>
+          <b-button-toolbar>
+            <b-button-group class="mx-1">
+              <b-button class="btn-select-all" variant="success">
+                <b-form-checkbox
+                  v-model="allSelected"
+                  :indeterminate="indeterminate"
+                  @change="toggleAll">
+                  <!-- {{ allSelected ? 'Unselect All' : 'Select All' }} -->
+                  ALL
+                </b-form-checkbox>
+              </b-button>
+            </b-button-group>
+            <b-button-group class="mx-1">
+              <b-btn variant="success" @click.stop="onImagesProcess(selected)" v-bind:disabled="selected.length === 0">Process</b-btn>
+            </b-button-group>
+          </b-button-toolbar>
           <b-form-checkbox-group id="imgs" stacked v-model="selected" name="imgs" class="ml-4">
             <b-form-checkbox v-for="(img, index) in item.imgs" :key="index" :value="img">
               <b-row align-v="start" align-h="between">
@@ -78,6 +88,11 @@ export default {
         imageUrl: image.src
       }
       await this.$store.dispatch('SAVE_IMAGES_TO_LOCAL', payload)
+    },
+    async onImagesProcess (images) {
+      for (let i = 0; i < images.length; ++i) {
+        await this.onImageProcess(images[i], i)
+      }
     }
   },
   watch: {
@@ -101,5 +116,9 @@ export default {
   .log-area {
     resize: none;
     width: 420px;
+  }
+  .btn-select-all > label {
+    margin-right: 0;
+    margin-bottom: 0;
   }
 </style>
