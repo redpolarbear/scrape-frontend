@@ -67,6 +67,12 @@ const createStore = () => {
           }
         })
         commit('SET_ITEM_IMG_INFO', {index: payload.index, key: 'local', value: filename})
+        const wdsrc = await this.$axios.$get('/uploadimage', {
+          params: {
+            filename
+          }
+        })
+        commit('SET_ITEM_IMG_INFO', {index: payload.index, key: 'wdsrc', value: wdsrc})
       }
     }
   })
