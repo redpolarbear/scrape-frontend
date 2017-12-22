@@ -57,9 +57,12 @@
             <b-img thumbnail :src="img.wdsrc" width="96"/>
           </b-col>
         </b-row>
+        <b-row>
+          <!-- <drag></drag> -->
+        </b-row>
         <hr>
-        <b-row fluid>
-          <b-col cols="4" v-for="(sku, indx) in item.skus" :key="indx">
+        <b-row fluid v-for="(sku, indx) in item.skus" :key="indx">
+          <b-col sm="auto">
             <b-card>
               <b-media>
                 <b-img v-if="sku.colorImg" slot="aside" :src="sku.colorImg" width="64" height="64" />
@@ -77,6 +80,12 @@
                 </b-form-group>
               </b-media>
             </b-card>
+          </b-col>
+          <b-col>
+            =>
+          </b-col>
+          <b-col>
+            <!-- <drop></drop> -->
           </b-col>
         </b-row>
       </tab-content>

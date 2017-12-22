@@ -63,6 +63,23 @@
         </b-col>
       </b-row>
     </div>
+
+    <b-row>
+      <b-col sm="auto">
+        <drag style="cursor: move;" :transferData="{src: img.src}">
+          <b-img :src="img.src" width="64"></b-img>
+        </drag>
+      </b-col>
+      <b-col sm="auto">
+        ->
+      </b-col>
+      <b-col sm="auto">
+        <drop @drop="handleDrop">
+          drop here
+          <b-img :src="newimg.src" v-if="newimg.src" width="64"></b-img>
+        </drop>
+      </b-col>
+    </b-row>
     <!-- <pre>
       {{ item }}
     </pre> -->
@@ -76,7 +93,13 @@ export default {
   name: 'home',
   data () {
     return {
-      url: ''
+      url: '',
+      img: {
+        src: 'https://si.geilicdn.com/bj-open-801779656-1513981587413-1957917553_396_800.jpg?w=396&h=800'
+      },
+      newimg: {
+        src: ''
+      }
     }
   },
   computed: {
@@ -89,6 +112,9 @@ export default {
       event.preventDefault()
       this.$store.commit('SET_ITEM', null)
       this.$store.dispatch('SCRAPE_ITEM_BY_API', {url: this.url})
+    },
+    handleDrop (data, event) {
+      this.newimg.src = data.src
     }
   }
 }
@@ -98,4 +124,30 @@ export default {
   #imgs > label > span.custom-control-description {
     width: 100% !important;
   }
+  .drag,
+  .drop {
+    font-family: sans-serif;
+    display: inline-block;
+    border-radius: 10px;
+    background: #ccc;
+    position: relative;
+    padding: 30px;
+    text-align: center;
+    vertical-align: top;
+  }
+
+  .drag-img {
+    /* color: #fff; */
+    cursor: move;
+    background: #777;
+    /* border-right: 2px solid #555; */
+    /* border-bottom: 2px solid #555; */
+  }
+
+  .drop {
+    background: #eee;
+    border-top: 2px solid #ccc;
+    border-left: 2px solid #ccc;
+  }
+
 </style>

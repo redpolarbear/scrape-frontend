@@ -23,7 +23,8 @@ module.exports = {
   */
   build: {
     vendor: [
-      'vue-form-wizard'
+      'vue-form-wizard',
+      'vue-drag-drop'
     ],
     /*
     ** Run ESLint on save
@@ -62,7 +63,8 @@ module.exports = {
   ** Plugins configuration
   */
   plugins: [
-    '~/plugins/vueformwizard'
+    '~/plugins/vueformwizard',
+    '~/plugins/vuedragdrop'
   ],
   proxy: [
     ['/api',
