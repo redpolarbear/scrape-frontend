@@ -50,8 +50,35 @@
           Indeterminate: <strong>{{ indeterminate }}</strong><br>
         </p>
       </tab-content>
-      <tab-content title="Additional Info">
-          My second tab content
+      <tab-content title="SKU">
+        Setup the SKU
+        <b-row align-v="end">
+          <b-col sm="auto" v-for="(img, index) in item.imgs" :key="index" v-if="img.wdsrc">
+            <b-img thumbnail :src="img.wdsrc" width="96"/>
+          </b-col>
+        </b-row>
+        <hr>
+        <b-row fluid>
+          <b-col cols="4" v-for="(sku, indx) in item.skus" :key="indx">
+            <b-card>
+              <b-media>
+                <b-img v-if="sku.colorImg" slot="aside" :src="sku.colorImg" width="64" height="64" />
+                <b-img v-else slot="aside" blank blank-color="#abc" width="64" height="64" />
+                <p class="mt-0">Color: {{ sku.colorName }}</p>
+                <p>Price: {{ sku.price }}</p>
+                <b-form-group id="sizeSelectGroup" label="Size:" label-for="sizeSelect">
+                  <!-- <label class="mr-sm-2" for="sizeSelect">Size: </label> -->
+                  <b-form-select id="sizeSelect" v-if="sku.sizes" :select-size="4">
+                    <option v-for="size in sku.sizes" :key="size" :value="size">{{ size }}</option>
+                  </b-form-select>
+                  <b-form-select id="sizeSelect" v-else>
+                    <option value="One Size">One Size</option>
+                  </b-form-select>
+                </b-form-group>
+              </b-media>
+            </b-card>
+          </b-col>
+        </b-row>
       </tab-content>
       <tab-content title="Last step">
         Yuhuuu! This seems pretty damn simple
@@ -74,7 +101,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      item: 'GET_ITEM'
+      item: 'GET_ITEM',
+      weidian: 'GET_WEIDIAN'
     })
   },
   methods: {

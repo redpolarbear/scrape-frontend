@@ -24,7 +24,7 @@
           </b-col>
         </b-row>
         <b-row fluid no-gutters>
-          <b-col align-self="center" v-for="(img, index) in item.imgs" :key="index">
+          <b-col sm="auto" align-self="center" v-for="(img, index) in item.imgs" :key="index">
             <b-img fluid :src="img.src" style="max-width: 128px; max-height: 128px;"/>
           </b-col>
         </b-row>

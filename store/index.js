@@ -14,11 +14,14 @@ const createStore = () => {
       GET_ITEM: (state) => {
         return state.item
       },
-      GET_LOADING (state) {
+      GET_LOADING: (state) => {
         return state.loading
       },
-      GET_ERROR (state) {
+      GET_ERROR: (state) => {
         return state.error
+      },
+      GET_WEIDIAN: (state) => {
+        return state.weidian
       }
     },
     mutations: {
