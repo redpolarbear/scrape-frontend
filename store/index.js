@@ -6,7 +6,8 @@ const createStore = () => {
       return {
         item: null,
         loading: false,
-        error: null
+        error: null,
+        weidian: null
       }
     },
     getters: {
@@ -59,8 +60,6 @@ const createStore = () => {
         }
       },
       async SAVE_IMAGES_TO_LOCAL ({commit}, payload) {
-        // var status = 'Saving the image to the local...'
-        // commit('SET_ITEM_IMG_STATUS', {index: payload.index, status: status})
         const filename = await this.$axios.$get('/saveimage', {
           params: {
             imageUrl: payload.imageUrl
@@ -73,6 +72,8 @@ const createStore = () => {
           }
         })
         commit('SET_ITEM_IMG_INFO', {index: payload.index, key: 'wdsrc', value: wdsrc})
+      },
+      async WEIDIAN_GET_ATTRIBUTE ({commit}, payload) {
       }
     }
   })

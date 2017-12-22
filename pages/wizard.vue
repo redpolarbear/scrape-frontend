@@ -69,8 +69,7 @@ export default {
     return {
       selected: [],
       allSelected: false,
-      indeterminate: false,
-      status: ''
+      indeterminate: false
     }
   },
   computed: {
@@ -91,7 +90,8 @@ export default {
     },
     async onImagesProcess (images) {
       for (let i = 0; i < images.length; ++i) {
-        await this.onImageProcess(images[i], i)
+        let index = this.item.imgs.findIndex(e => e === images[i])
+        await this.onImageProcess(images[i], index)
       }
     }
   },
