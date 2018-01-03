@@ -92,6 +92,11 @@
                 <b-img slot="aside" v-else :src="dropSrc" width="96" style="height: 100%;"/>
                   <!-- <b-img slot="aside" src="https://si.geilicdn.com/bj-open-801779656-1514094920476-631549699_682_800.jpg?w=682&h=800" width="96" height="100%"></b-img> -->
                 <!-- </drop> -->
+                <b-btn v-b-modal.modal1>Launch demo modal</b-btn>
+                <!-- Modal Component -->
+                <b-modal id="modal1" title="Bootstrap-Vue">
+                  <p class="my-4">Hello from modal!</p>
+                </b-modal>
                 <h5 class="mt-0">Color</h5>
                 <p>
                   Cras sit amet nibh libero, in gravida nulla. 

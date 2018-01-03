@@ -9,15 +9,17 @@ const createStore = () => {
         error: null,
         weidian: {
           item: {
-            price: '',
-            stock: '',
-            itemName: '',
-            bigImgs: [],
-            titles: [],
-            cate_id: '',
-            free_delivery: '',
-            remote_free_delivery: ''
-          }
+            price: '', // price
+            stock: '', // stock
+            itemName: '', // product name
+            bigImgs: [], // Array[string], weidian https
+            titles: [], // Array[string], desc for the images
+            cate_id: '', // category id, separate by comma
+            free_delivery: '', // delivery cost: 0 - cost, 1 - free
+            remote_free_delivery: '', // remote delivery cost: 0 - free, 1 - cost
+            sku: []
+          },
+          attr_list: []
         }
       }
     },
@@ -31,8 +33,11 @@ const createStore = () => {
       GET_ERROR: (state) => {
         return state.error
       },
-      GET_WEIDIAN: (state) => {
-        return state.weidian
+      GET_WEIDIAN_ATTR_LIST: (state) => {
+        return state.weidian.attr_list
+      },
+      GET_WEIDIAN_ITEM: (state) => {
+        return state.weidian.item
       }
     },
     mutations: {
@@ -48,23 +53,8 @@ const createStore = () => {
       SET_ITEM_IMG_INFO (state, payload) {
         state.item.imgs[payload.index][payload.key] = payload.value
       },
-      COPY_TO_WEIDIAN_ITEM (state, payload) {
-      },
-      INITIATE_WEIDIAN_ITEM (state, payload) {
-        state.weidian = {
-          item: {
-            price: '', // price
-            stock: '', // stock
-            itemName: '', // product name
-            bigImgs: [], // Array[string], weidian https
-            titles: [], // Array[string], desc for the images
-            cate_id: '', // category id, separate by comma
-            free_delivery: '', // delivery cost: 0 - cost, 1 - free
-            remote_free_delivery: '', // remote delivery cost: 0 - free, 1 - cost
-            sku: [], // optional
-            attr_list: [] // optional
-          }
-        }
+      COPY_TO_WEIDIAN_ITEM_STEP_1 (state, payload) {
+        state.weidian.item.itemName = payload.name
       }
     },
     actions: {
