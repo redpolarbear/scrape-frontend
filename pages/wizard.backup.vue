@@ -54,8 +54,8 @@
         Setup the SKU
         <b-row align-v="end">
           <b-col sm="auto" v-for="(img, index) in item.imgs" :key="index" v-if="img.wdsrc">
-            <drag style="cursor: move" :transfer-data="{ img: img.wdsrc }" effectAllowed="copy" dropEffect="copy">
-              <b-img thumbnail :src="img.wdsrc" width="96"/>
+            <drag style="cursor: move;" :transferData="{index, img: img.wdsrc}">
+              <b-img :src="img.wdsrc" width="96" />
             </drag>
           </b-col>
         </b-row>
@@ -64,12 +64,12 @@
           <b-col sm="auto">
             <b-card>
               <b-media>
-                <b-img v-if="sku.colorImg" slot="aside" :src="sku.colorImg" width="64" height="64" />
+                <b-img slot="aside" :src="sku.colorImg" width="64" height="64" v-if="sku.colorImg"/>
                 <b-img v-else slot="aside" blank blank-color="#abc" width="64" height="64" />
                 <p class="mt-0">Color: {{ sku.colorName }}</p>
                 <p>Price: {{ sku.price }}</p>
                 <b-form-group id="sizeSelectGroup" label="Size:" label-for="sizeSelect">
-                  <!-- <label class="mr-sm-2" for="sizeSelect">Size: </label> -->
+                  <label class="mr-sm-2" for="sizeSelect">Size: </label>
                   <b-form-select id="sizeSelect" v-if="sku.sizes" :select-size="4">
                     <option v-for="size in sku.sizes" :key="size" :value="size">{{ size }}</option>
                   </b-form-select>
@@ -86,34 +86,13 @@
           <b-col sm="auto">
             <b-card>
               <b-media>
-                <!-- <drop> -->
-                <drop v-if="dropSrc === null" style="padding: 30px; border: 1px solid black;" slot="aside" @drop="handleDrop">+
+                <drop @drop="handleDrop">
+                  <b-img slot="aside" :src="weidian.item.skus[indx].img" v-if="weidian.item.skus[indx].img" width="64"></b-img>
+                  <div class="image-upload" v-else>+</div>
                 </drop>
-                <b-img slot="aside" v-else :src="dropSrc" width="96" style="height: 100%;"/>
-                  <!-- <b-img slot="aside" src="https://si.geilicdn.com/bj-open-801779656-1514094920476-631549699_682_800.jpg?w=682&h=800" width="96" height="100%"></b-img> -->
-                <!-- </drop> -->
-                <h5 class="mt-0">Color</h5>
-                <p>
-                  Cras sit amet nibh libero, in gravida nulla. 
-                </p>
               </b-media>
             </b-card>
-            <!-- <b-card>
-              <b-media>
-                <b-img slot="aside" blank blank-color="#ccc" width="64" alt="placeholder" />
-                <h5 class="mt-0">Media Title</h5>
-                <p>
-                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                  sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                  Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis
-                  in faucibus.
-                </p>
-                <p>
-                  Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum
-                  sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                </p>
-              </b-media>
-            </b-card> -->
+            <!-- <drop></drop> -->
           </b-col>
         </b-row>
       </tab-content>
@@ -133,8 +112,7 @@ export default {
     return {
       selected: [],
       allSelected: false,
-      indeterminate: false,
-      dropSrc: null
+      indeterminate: false
     }
   },
   computed: {
@@ -161,9 +139,9 @@ export default {
       }
     },
     handleDrop (data, event) {
-      console.log(data)
-      console.log(event)
-      this.dropSrc = data.img
+    },
+    cpWeidian () {
+      // this.$store.commit('COPY_TO_WEIDIAN_ITEM', this.item)
     }
   },
   watch: {

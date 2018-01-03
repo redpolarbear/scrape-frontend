@@ -1,0 +1,75 @@
+{
+  "price": "2",
+  "stock": "20",
+  "itemName": "接口测试多级SKU商品1_2",
+  "sku": [
+    {
+      "title": "L ; 蓝色",
+      "stock": 2,
+      "price": "112.00",
+      "id": "5688539565",
+      "sku_merchant_code": "",
+      "attr_ids": [764651, 764647],
+      "img": ""
+    },
+    {
+      "title": "L ; 红色",
+      "stock": 2,
+      "price": "112.00",
+      "id": "5688539566",
+      "sku_merchant_code": "",
+      "attr_ids": [764651, 764645],
+      "img": ""
+    },
+    {
+      "title": "S ; 蓝色",
+      "stock": 2,
+      "price": "112.00",
+      "id": "5688539567",
+      "sku_merchant_code": "",
+      "attr_ids": [764649, 764647],
+      "img": ""
+    },
+    {
+      "title": "S ; 红色",
+      "stock": 2,
+      "price": "112.00",
+      "id": "5688539568",
+      "sku_merchant_code": "",
+      "attr_ids": [764649, 764645],
+      "img": ""
+    }
+  ],
+  "attr_list": [
+    {
+      "attr_title": "尺码",
+      "attr_values": [
+        {
+          "attr_id": 764651,
+          "attr_value": "L",
+          "img": "https://si.geilicdn.com/vshop1439284363313588917.jpg"
+        },
+        {
+          "attr_id": 764649,
+          "attr_value": "S",
+          "img": "https://si.geilicdn.com/open_1459286043171_386.jpg"
+        }
+      ]
+    },
+    {
+      "attr_title": "颜色",
+      "attr_values": [
+        { "attr_id": 764647, "attr_value": "蓝色", "img": "" },
+        { "attr_id": 764645, "attr_value": "红色", "img": "" }
+      ]
+    }
+  ],
+  "bigImgs": [
+    "http://wd.geilicdn.com/vshop395640-1390204649-1.jpg",
+    "http://img.geilicdn.com/open_1459286043171_386.jpg"
+  ],
+  "titles": ["图片1", "图片3"],
+  "cate_id": "747807,747858",
+  "free_delivery": "0",
+  "remote_free_delivery": "0"
+}

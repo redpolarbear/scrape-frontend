@@ -7,7 +7,18 @@ const createStore = () => {
         item: null,
         loading: false,
         error: null,
-        weidian: null
+        weidian: {
+          item: {
+            price: '',
+            stock: '',
+            itemName: '',
+            bigImgs: [],
+            titles: [],
+            cate_id: '',
+            free_delivery: '',
+            remote_free_delivery: ''
+          }
+        }
       }
     },
     getters: {
@@ -35,14 +46,25 @@ const createStore = () => {
         state.error = payload
       },
       SET_ITEM_IMG_INFO (state, payload) {
-        // state.item.imgs[payload.index] = { ...state.item.imgs[payload.index] }
         state.item.imgs[payload.index][payload.key] = payload.value
-        // const status = state.item.imgs[payload.index]['status'] + '\n\r' + payload.status
-        // console.log(status)
-        // console.log(state.item.imgs[payload.index]['status'])
-        // state.item.imgs.slice(0, payload.index).concat([{ src: state.item.imgs[payload.index]['src'], status: status }]).concat(state.items.imgs.slice(payload.index + 1))
-        // // state.item.imgs = [ ...state.items.imgs.slice(0, payload.index), { src: state.item.imgs[payload.index]['src'], status: status }, ...state.items.imgs.slice(payload.index + 1) ]
-        // state.item = Object.assign({ ...state.item }, { imgs: {} })
+      },
+      COPY_TO_WEIDIAN_ITEM (state, payload) {
+      },
+      INITIATE_WEIDIAN_ITEM (state, payload) {
+        state.weidian = {
+          item: {
+            price: '', // price
+            stock: '', // stock
+            itemName: '', // product name
+            bigImgs: [], // Array[string], weidian https
+            titles: [], // Array[string], desc for the images
+            cate_id: '', // category id, separate by comma
+            free_delivery: '', // delivery cost: 0 - cost, 1 - free
+            remote_free_delivery: '', // remote delivery cost: 0 - free, 1 - cost
+            sku: [], // optional
+            attr_list: [] // optional
+          }
+        }
       }
     },
     actions: {
