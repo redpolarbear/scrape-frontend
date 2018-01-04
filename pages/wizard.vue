@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <form-wizard>
-      <tab-content title="Upload Images">
+      <tab-content title="Upload Images" :before-change="onGetWeidianAttr">
         <b-form-group>
           <template slot="label">
             <b>Choose the images you'd like to upload:</b><br>
@@ -86,41 +86,41 @@
           <b-col sm="auto">
             <b-card>
               <b-media>
-                <!-- <drop> -->
-                <drop v-if="dropSrc === null" style="padding: 30px; border: 1px solid black;" slot="aside" @drop="handleDrop">+
-                </drop>
-                <b-img slot="aside" v-else :src="dropSrc" width="96" style="height: 100%;"/>
-                  <!-- <b-img slot="aside" src="https://si.geilicdn.com/bj-open-801779656-1514094920476-631549699_682_800.jpg?w=682&h=800" width="96" height="100%"></b-img> -->
-                <!-- </drop> -->
-                <b-btn v-b-modal.modal1>Launch demo modal</b-btn>
-                <!-- Modal Component -->
-                <b-modal id="modal1" title="Bootstrap-Vue">
-                  <p class="my-4">Hello from modal!</p>
-                </b-modal>
-                <h5 class="mt-0">Color</h5>
-                <p>
-                  Cras sit amet nibh libero, in gravida nulla. 
-                </p>
+                <drop v-if="weidian.sku[indx].img === ''" style="padding: 30px; border: 1px solid black;" slot="aside" @drop="handleImageDrop(indx, ...arguments)">+</drop>
+                <b-img slot="aside" v-else :src="weidian.sku[indx].img" width="96" style="height: 100%;"/>
+                <b-btn v-b-modal.attrListModal>Add Attr</b-btn>
               </b-media>
             </b-card>
-            <!-- <b-card>
-              <b-media>
-                <b-img slot="aside" blank blank-color="#ccc" width="64" alt="placeholder" />
-                <h5 class="mt-0">Media Title</h5>
-                <p>
-                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                  sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                  Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis
-                  in faucibus.
-                </p>
-                <p>
-                  Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum
-                  sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                </p>
-              </b-media>
-            </b-card> -->
           </b-col>
         </b-row>
+        <b-modal id="attrListModal" title="Attribution List">
+          <!-- <b-form-group v-for="attr in weidian.attr_list" :key="attr.attr_title">
+            <b-form-radio-group v-model="attrSelected">
+              <b-form-radio :value="attr.attr_title">{{attr.attr_title}}</b-form-radio>
+              <b-form-select :select-size="8">
+                <option v-for="attr_value in attr.attr_values" :key="attr_value.attr_id" :value="attr_value.attr_value">{{ attr_value.attr_value }}</option>
+              </b-form-select>
+            </b-form-radio-group>
+          </b-form-group> -->
+          <b-row>
+            <b-col sm="auto" v-for="attr in weidian.attr_list" :key="attr.attr_title">
+              <b-card>
+                <b-media no-body>
+                  <b-media-body>
+                    <b-form-group>
+                      <b-form-radio-group v-model="attrSelected">
+                        <b-form-radio :value="attr.attr_title">{{attr.attr_title}}</b-form-radio>
+                        <b-form-select :select-size="8" multiple>
+                          <option v-for="attr_value in attr.attr_values" :key="attr_value.attr_id" :value="attr_value.attr_value">{{ attr_value.attr_value }}</option>
+                        </b-form-select>
+                      </b-form-radio-group>
+                    </b-form-group>
+                  </b-media-body>
+                </b-media>
+              </b-card>
+            </b-col>
+          </b-row>
+        </b-modal>
       </tab-content>
       <tab-content title="Last step">
         Yuhuuu! This seems pretty damn simple
@@ -139,13 +139,17 @@ export default {
       selected: [],
       allSelected: false,
       indeterminate: false,
-      dropSrc: null
+      dropSrc: null,
+      attrSelected: ''
     }
   },
   computed: {
     ...mapGetters({
       item: 'GET_ITEM',
-      weidian: 'GET_WEIDIAN'
+      weidian: 'GET_WEIDIAN',
+      weidianItem: 'GET_WEIDIAN_ITEM',
+      weidianSku: 'GET_WEIDIAN_SKU',
+      weidianAttrList: 'GET_WEIDIAN_ATTR_LIST'
     })
   },
   methods: {
@@ -165,10 +169,12 @@ export default {
         await this.onImageProcess(images[i], index)
       }
     },
-    handleDrop (data, event) {
-      console.log(data)
-      console.log(event)
-      this.dropSrc = data.img
+    handleImageDrop (index, data, event) {
+      this.$store.commit('SET_WEIDIAN_SKU_IMAGE', { index, img: data.img })
+    },
+    async onGetWeidianAttr () {
+      await this.$store.dispatch('WEIDIAN_GET_ATTRIBUTE')
+      return true
     }
   },
   watch: {

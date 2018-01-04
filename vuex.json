@@ -1,0 +1,118 @@
+{
+  "item": {
+    "skus": [
+      {
+        "colorImg":
+          "https://cdn.mec.ca/medias/sys_master/placeholder/placeholder/8912718921758/5043127-LIA01-SWATCH-placeholder.jpg",
+        "colorName": "Liam Plaid",
+        "price": 69,
+        "sizes": ["XX-Large"]
+      },
+      {
+        "colorImg":
+          "https://cdn.mec.ca/medias/sys_master/placeholder/placeholder/8912732291102/5043127-MDB20-SWATCH-placeholder.jpg",
+        "colorName": "Midnight Blue Tom Plaid",
+        "price": 69,
+        "sizes": ["Small", "Medium", "XX-Large"]
+      },
+      {
+        "colorImg":
+          "https://cdn.mec.ca/medias/sys_master/placeholder/placeholder/8912735272990/5043127-BK618-SWATCH-placeholder.jpg",
+        "colorName": "Black Olive Tom Plaid",
+        "price": 69,
+        "sizes": ["Small", "Medium", "XX-Large"]
+      }
+    ],
+    "desc":
+      "<p>From gridlock to off the grid, a plaid shirt remains low-key. This one has a tailored fit to neaten things up a bit.</p><ul><li>Made of soft, comfortable organically grown cottona and recycled polyester.</li><li>Slim fit for a bit of tailored sophistication.</li><li>Chest pockets allow you to bring this and that.</li><li>Length at centre back is 30 inches.</li></ul>",
+    "imgs": [
+      {
+        "local": "",
+        "src":
+          "https://cdn.mec.ca/medias/sys_master/high-res/high-res/8912717217822/5043127-LIA01.jpg",
+        "wdsrc": ""
+      },
+      {
+        "local": "",
+        "src":
+          "https://cdn.mec.ca/medias/sys_master/high-res/high-res/8912718331934/5043127-LIA01-ALT-BACK.jpg",
+        "wdsrc": ""
+      },
+      {
+        "local": "",
+        "src":
+          "https://cdn.mec.ca/medias/sys_master/high-res/high-res/8912732094494/5043127-MDB20.jpg",
+        "wdsrc": ""
+      },
+      {
+        "local": "",
+        "src":
+          "https://cdn.mec.ca/medias/sys_master/high-res/high-res/8912734781470/5043127-BK618.jpg",
+        "wdsrc": ""
+      }
+    ],
+    "name": "MEC Lodging Shirt - Men's"
+  },
+  "loading": false,
+  "error": null,
+  "weidian": {
+    "item": {
+      "price": "",
+      "stock": "",
+      "itemName": "MEC Lodging Shirt - Men's",
+      "bigImgs": [],
+      "titles": [],
+      "cate_id": "",
+      "free_delivery": "",
+      "remote_free_delivery": ""
+    },
+    "sku": [
+      {
+        "title": "",
+        "stock": 1,
+        "price": "",
+        "sku_merchant_code": "",
+        "attr_ids": [],
+        "img": ""
+      },
+      {
+        "title": "",
+        "stock": 1,
+        "price": "",
+        "sku_merchant_code": "",
+        "attr_ids": [],
+        "img": ""
+      },
+      {
+        "title": "",
+        "stock": 1,
+        "price": "",
+        "sku_merchant_code": "",
+        "attr_ids": [],
+        "img": ""
+      }
+    ],
+    "attr_list": [
+      {
+        "attr_title": "尺寸",
+        "attr_values": [
+          { "attr_id": 6269222, "attr_value": "S" },
+          { "attr_id": 6269225, "attr_value": "XL" },
+          { "attr_id": 6269224, "attr_value": "L" },
+          { "attr_id": 6269223, "attr_value": "M" }
+        ]
+      },
+      {
+        "attr_title": "颜色",
+        "attr_values": [
+          { "attr_id": 6269220, "attr_value": "蓝色" },
+          { "attr_id": 6269219, "attr_value": "黄色" },
+          { "attr_id": 6269218, "attr_value": "红色" },
+          { "attr_id": 6269217, "attr_value": "白色" },
+          { "attr_id": 6269216, "attr_value": "黑色" },
+          { "attr_id": 6269221, "attr_value": "绿色" }
+        ]
+      }
+    ]
+  }
+}
