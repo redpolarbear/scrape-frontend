@@ -60,14 +60,46 @@
           </b-col>
         </b-row>
         <hr>
+        <b-button v-b-modal.attrListModal>Add Attributes</b-button>
+        <b-button-group v-for="attrTitle in attrTitleChecked" :key="attrTitle.attr_title">
+          <b-button variant="outline-success" size="sm">{{ attrTitle.attr_title }}</b-button>
+          <b-button variant="outline-success" size="sm"><span>&times;</span></b-button>
+        </b-button-group>
+        <b-modal id="attrListModal" title="Attr Title List" @ok="selectAttrTitle">
+          <b-row>
+            <b-col sm="auto" v-for="attr in weidian.attr_list" :key="attr.attr_title">
+              <b-card>
+                <b-media no-body>
+                  <b-media-body>
+                    <b-form-group>
+                      <b-form-checkbox-group v-model="attrTitleChecked">
+                        <b-form-checkbox :value="{ attr_title: attr.attr_title }">{{attr.attr_title}}</b-form-checkbox>
+                        <b-form-select :select-size="8" multiple v-model="attrValueSelected">
+                          <option
+                            v-for="attr_value in attr.attr_values"
+                            :key="attr_value.attr_id"
+                            :value="attr_value"
+                            :disabled="true">
+                            {{ attr_value.attr_value }}
+                          </option>
+                          <!-- :disabled="!!attrTitleChecked.attr_title ? attrTitleChecked.attr_title !== attr.attr_title : false"> -->
+                        </b-form-select>
+                      </b-form-checkbox-group>
+                    </b-form-group>
+                  </b-media-body>
+                </b-media>
+              </b-card>
+            </b-col>
+          </b-row>
+        </b-modal>
         <b-row fluid v-for="(sku, indx) in item.skus" :key="indx">
           <b-col sm="auto">
             <b-card>
               <b-media>
                 <b-img v-if="sku.colorImg" slot="aside" :src="sku.colorImg" width="64" height="64" />
                 <b-img v-else slot="aside" blank blank-color="#abc" width="64" height="64" />
-                <p class="mt-0">Color: {{ sku.colorName }}</p>
                 <p>Price: {{ sku.price }}</p>
+                <p class="mt-0">Color: {{ sku.colorName }}</p>
                 <b-form-group id="sizeSelectGroup" label="Size:" label-for="sizeSelect">
                   <!-- <label class="mr-sm-2" for="sizeSelect">Size: </label> -->
                   <b-form-select id="sizeSelect" v-if="sku.sizes" :select-size="4">
@@ -86,41 +118,46 @@
           <b-col sm="auto">
             <b-card>
               <b-media>
-                <drop v-if="weidian.sku[indx].img === ''" style="padding: 30px; border: 1px solid black;" slot="aside" @drop="handleImageDrop(indx, ...arguments)">+</drop>
-                <b-img slot="aside" v-else :src="weidian.sku[indx].img" width="96" style="height: 100%;"/>
-                <b-btn v-b-modal.attrListModal>Add Attr</b-btn>
+                <drop v-if="weidian.sku[indx].img === ''" slot="aside" style="padding: 30px; border: 1px solid black;" @drop="handleImageDrop(indx, ...arguments)">+</drop>
+                <b-img v-else slot="aside" :src="weidian.sku[indx].img" width="96" style="height: 100%;"/>
+                <b-row v-for="list in weidian.item.attr_list" :key="list.attr_title">
+                  <b-button-group>
+                    <b-button variant="outline-info" size="sm">{{ list.attr_title}}</b-button>
+                    <!-- <b-button variant="outline-info" size="sm">></b-button> -->
+                    <b-button variant="outline-info" size="sm">+</b-button>
+                  </b-button-group>
+                </b-row>
               </b-media>
             </b-card>
           </b-col>
         </b-row>
-        <b-modal id="attrListModal" title="Attribution List">
-          <!-- <b-form-group v-for="attr in weidian.attr_list" :key="attr.attr_title">
-            <b-form-radio-group v-model="attrSelected">
-              <b-form-radio :value="attr.attr_title">{{attr.attr_title}}</b-form-radio>
-              <b-form-select :select-size="8">
-                <option v-for="attr_value in attr.attr_values" :key="attr_value.attr_id" :value="attr_value.attr_value">{{ attr_value.attr_value }}</option>
-              </b-form-select>
-            </b-form-radio-group>
-          </b-form-group> -->
+        <!-- <b-modal id="attrValueModal" title="Attribution Values">
           <b-row>
-            <b-col sm="auto" v-for="attr in weidian.attr_list" :key="attr.attr_title">
+            <b-col>
               <b-card>
                 <b-media no-body>
                   <b-media-body>
                     <b-form-group>
-                      <b-form-radio-group v-model="attrSelected">
-                        <b-form-radio :value="attr.attr_title">{{attr.attr_title}}</b-form-radio>
-                        <b-form-select :select-size="8" multiple>
-                          <option v-for="attr_value in attr.attr_values" :key="attr_value.attr_id" :value="attr_value.attr_value">{{ attr_value.attr_value }}</option>
-                        </b-form-select>
-                      </b-form-radio-group>
+                      <b-form-checkbox-group v-model="attrTitleChecked">
+                        <b-form-checkbox :value="{ attr_title: attr.attr_title }">{{attr.attr_title}}</b-form-checkbox>
+                        <b-form-select :select-size="8" multiple v-model="attrValueSelected">
+                          <option
+                            v-for="attr_value in attr.attr_values"
+                            :key="attr_value.attr_id"
+                            :value="attr_value"
+                            :disabled="true">
+                            {{ attr_value.attr_value }}
+                          </option>
+                          <!-- :disabled="!!attrTitleChecked.attr_title ? attrTitleChecked.attr_title !== attr.attr_title : false"> -->
+                        <!-- </b-form-select>
+                      </b-form-checkbox-group>
                     </b-form-group>
                   </b-media-body>
                 </b-media>
               </b-card>
             </b-col>
           </b-row>
-        </b-modal>
+        </b-modal> --> -->
       </tab-content>
       <tab-content title="Last step">
         Yuhuuu! This seems pretty damn simple
@@ -139,8 +176,8 @@ export default {
       selected: [],
       allSelected: false,
       indeterminate: false,
-      dropSrc: null,
-      attrSelected: ''
+      attrTitleChecked: [],
+      attrValueSelected: []
     }
   },
   computed: {
@@ -175,6 +212,14 @@ export default {
     async onGetWeidianAttr () {
       await this.$store.dispatch('WEIDIAN_GET_ATTRIBUTE')
       return true
+    },
+    selectAttrTitle () {
+      console.log(this.attrTitleChecked.length)
+      if (this.attrTitleChecked.length > 0) {
+        this.$store.commit('SELECT_WEIDIAN_ITEM_ATTR_LIST', this.attrTitleChecked)
+      } else if (this.attrTitleChecked.length === 0) {
+        this.$store.commit('REMOVE_WEIDIAN_ITEM_ATTR_LIST')
+      }
     }
   },
   watch: {

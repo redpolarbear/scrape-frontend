@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import _ from 'lodash'
 
 const createStore = () => {
   return new Vuex.Store({
@@ -76,11 +77,29 @@ const createStore = () => {
           state.weidian.sku.push(sku)
         }
       },
-      SET_WEIDIAN_ITEM_ATTR_LIST (state, payload) {
+      SET_WEIDIAN_ATTR_LIST (state, payload) {
         state.weidian.attr_list = payload.attr_list
       },
       SET_WEIDIAN_SKU_IMAGE (state, payload) {
         state.weidian.sku[payload.index].img = payload.img
+      },
+      SELECT_WEIDIAN_ITEM_ATTR_LIST (state, payload) {
+        if (state.weidian.item.hasOwnProperty('attr_list')) {
+          const toRemove = _.differenceBy(state.weidian.item.attr_list, payload, 'attr_title')
+          const toAdd = _.differenceBy(payload, state.weidian.item.attr_list, 'attr_title')
+          state.weidian.item.attr_list = state.weidian.item.attr_list.filter((el) => !toRemove.includes(el))
+          state.weidian.item.attr_list = _.concat(state.weidian.item.attr_list, toAdd)
+        } else {
+          state.weidian.item = {
+            ...state.weidian.item,
+            attr_list: payload
+          }
+        }
+      },
+      REMOVE_WEIDIAN_ITEM_ATTR_LIST (state) {
+        if (state.weidian.item.hasOwnProperty('attr_list')) {
+          state.weidian.item = _.omit(state.weidian.item, 'attr_list')
+        }
       }
     },
     actions: {
@@ -121,7 +140,7 @@ const createStore = () => {
       async WEIDIAN_GET_ATTRIBUTE ({commit}, payload) {
         try {
           const attrList = await this.$axios.$get('/getattr')
-          commit('SET_WEIDIAN_ITEM_ATTR_LIST', { attr_list: attrList.data.attr_list })
+          commit('SET_WEIDIAN_ATTR_LIST', { attr_list: attrList.data.attr_list })
         } catch (error) {
           console.log(error)
         }
