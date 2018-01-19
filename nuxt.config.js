@@ -24,7 +24,8 @@ module.exports = {
   build: {
     vendor: [
       'vue-form-wizard',
-      'vue-drag-drop'
+      'vue-drag-drop',
+      'lodash'
     ],
     /*
     ** Run ESLint on save
