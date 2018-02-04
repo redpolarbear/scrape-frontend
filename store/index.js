@@ -43,6 +43,9 @@ const createStore = () => {
       GET_WEIDIAN_ATTR_LIST: (state) => {
         return state.weidian.attr_list
       },
+      GET_WEIDIAN_ATTR_LIST_BY_TITLE: (state) => {
+        return title => state.weidian.attr_list.filter(item => item.attr_title === title)
+      },
       GET_WEIDIAN_SKU: (state) => {
         return state.weidian.sku
       }

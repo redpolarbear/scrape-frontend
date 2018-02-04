@@ -123,14 +123,40 @@
                 <b-row v-for="list in weidian.item.attr_list" :key="list.attr_title">
                   <b-button-group>
                     <b-button variant="outline-info" size="sm">{{ list.attr_title}}</b-button>
-                    <!-- <b-button variant="outline-info" size="sm">></b-button> -->
-                    <b-button variant="outline-info" size="sm">+</b-button>
+                    <b-button variant="outline-info" size="sm" @click="addAttrValues(indx, list.attr_title)">+</b-button>
                   </b-button-group>
                 </b-row>
               </b-media>
             </b-card>
           </b-col>
         </b-row>
+        <b-modal ref="attrValueModal" title="Attribution Values">
+          <b-row>
+            <b-col sm="auto" v-for="attr in selectedAttrList" :key="attr.attr_title">
+              <b-card>
+                <b-media no-body>
+                  <b-media-body>
+                    <b-form-group>
+                      <b-form-checkbox-group v-model="attrTitleChecked">
+                        <b-form-checkbox :value="{ attr_title: attr.attr_title }">{{attr.attr_title}}</b-form-checkbox>
+                        <b-form-select :select-size="8" multiple v-model="attrValueSelected">
+                          <option
+                            v-for="attr_value in attr.attr_values"
+                            :key="attr_value.attr_id"
+                            :value="attr_value"
+                            :disabled="false">
+                            {{ attr_value.attr_value }}
+                          </option>
+                          <!-- :disabled="!!attrTitleChecked.attr_title ? attrTitleChecked.attr_title !== attr.attr_title : false"> -->
+                        </b-form-select>
+                      </b-form-checkbox-group>
+                    </b-form-group>
+                  </b-media-body>
+                </b-media>
+              </b-card>
+            </b-col>
+          </b-row>
+        </b-modal>
         <!-- <b-modal id="attrValueModal" title="Attribution Values">
           <b-row>
             <b-col>
@@ -177,7 +203,8 @@ export default {
       allSelected: false,
       indeterminate: false,
       attrTitleChecked: [],
-      attrValueSelected: []
+      attrValueSelected: [],
+      seletedAttrTitle: ''
     }
   },
   computed: {
@@ -187,7 +214,10 @@ export default {
       weidianItem: 'GET_WEIDIAN_ITEM',
       weidianSku: 'GET_WEIDIAN_SKU',
       weidianAttrList: 'GET_WEIDIAN_ATTR_LIST'
-    })
+    }),
+    selectedAttrList () {
+      return this.$store.getters.GET_WEIDIAN_ATTR_LIST_BY_TITLE(this.seletedAttrTitle)
+    }
   },
   methods: {
     toggleAll (checked) {
@@ -220,6 +250,15 @@ export default {
       } else if (this.attrTitleChecked.length === 0) {
         this.$store.commit('REMOVE_WEIDIAN_ITEM_ATTR_LIST')
       }
+    },
+    addAttrValues (index, title) {
+      console.log(index)
+      console.log(title)
+      this.seletedAttrTitle = title
+      console.log(this.selectedAttrList)
+      // const attrList = this.$store.getters.GET_WEIDIAN_ATTR_LIST_BY_TITLE(title)
+      // console.log(attrList[0].attr_values)
+      this.$refs.attrValueModal.show()
     }
   },
   watch: {
